@@ -19,14 +19,12 @@ interface OptimizationPanelProps {
   taxInput: TaxInput;
   comparison: TaxComparison | null;
   onInputChange: (input: TaxInput) => void;
-  onCalculate: () => void;
 }
 
 const OptimizationPanel: React.FC<OptimizationPanelProps> = ({
   taxInput,
   comparison,
   onInputChange,
-  onCalculate,
 }) => {
   const handleExportPDF = () => {
     if (comparison) {
@@ -84,7 +82,7 @@ const OptimizationPanel: React.FC<OptimizationPanelProps> = ({
         priority: 'high' as const,
         action: () => {
           onInputChange(testInput);
-          onCalculate();
+          // Auto-calculation will trigger via useEffect
         },
       });
     }
@@ -108,7 +106,7 @@ const OptimizationPanel: React.FC<OptimizationPanelProps> = ({
     }
 
     return suggestions;
-  }, [taxInput, comparison, onInputChange, onCalculate]);
+  }, [taxInput, comparison, onInputChange]); // Remove onCalculate dependency
 
   const scenarioAnalysis = useMemo(() => {
     if (!comparison) return [];

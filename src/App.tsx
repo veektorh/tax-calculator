@@ -8,14 +8,132 @@ import OptimizationPanel from './components/OptimizationPanel';
 import ScenarioManager from './components/ScenarioManager';
 
 const App: React.FC = () => {
-  console.log('App component starting to render');
-  
+  const [taxInput, setTaxInput] = useState<TaxInput>(() =>
+    createTaxInput({
+      grossAnnualIncome: 6000000, // Start with a more reasonable example
+      annualRent: 2500000,
+      nhfContribution: 0,
+      nhisContribution: 0,
+      pensionContribution: 0,
+      interestOnLoan: 0,
+      lifeInsurancePremium: 0,
+    }),
+  );
+
+  const [comparison, setComparison] = useState<TaxComparison | null>(null);
+  const [activeTab, setActiveTab] = useState<
+    'calculator' | 'optimization' | 'scenarios'
+  >('calculator');
+
+  const handleInputChange = useCallback((newInput: TaxInput) => {
+    setTaxInput(newInput);
+    // Don't clear comparison - let useEffect handle recalculation
+  }, []);
+
+  const handleLoadScenario = useCallback((newInput: TaxInput) => {
+    setTaxInput(newInput);
+    setActiveTab('calculator');
+    // Auto-calculation will trigger via useEffect
+  }, []);
+
+  // Calculate on mount and whenever taxInput changes
+  useEffect(() => {
+    try {
+      const result = compareTaxLaws(taxInput);
+      setComparison(result);
+    } catch (error) {
+      console.error('Tax calculation failed:', error);
+    }
+  }, [taxInput]); // Recalculate when taxInput changes
+
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100'>
-      <div style={{ padding: '20px', textAlign: 'center' }}>
-        <h1>Nigerian Tax Calculator</h1>
-        <p>App is loading successfully!</p>
+      <Header />
+
+      <div className='container mx-auto px-4 py-8'>
+        {/* Tab Navigation */}
+        <div className='flex mb-8 bg-white rounded-lg p-1 shadow-md max-w-lg mx-auto'>
+          <button
+            className={`flex-1 py-2 px-4 rounded-md font-medium transition-all text-sm ${
+              activeTab === 'calculator'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}
+            onClick={() => setActiveTab('calculator')}
+          >
+            Calculator
+          </button>
+          <button
+            className={`flex-1 py-2 px-4 rounded-md font-medium transition-all text-sm ${
+              activeTab === 'optimization'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}
+            onClick={() => setActiveTab('optimization')}
+          >
+            Optimization
+          </button>
+          <button
+            className={`flex-1 py-2 px-4 rounded-md font-medium transition-all text-sm ${
+              activeTab === 'scenarios'
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'text-gray-600 hover:text-gray-800'
+            }`}
+            onClick={() => setActiveTab('scenarios')}
+          >
+            Scenarios
+          </button>
+        </div>
+
+        {activeTab === 'calculator' ? (
+          <div className='grid lg:grid-cols-2 gap-8'>
+            {/* Left Column - Tax Form */}
+            <div className='space-y-6'>
+              <TaxForm
+                input={taxInput}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            {/* Right Column - Results */}
+            <div className='space-y-6'>
+              <ComparisonView
+                comparison={comparison}
+                isLoading={false}
+              />
+            </div>
+          </div>
+        ) : activeTab === 'optimization' ? (
+          <div className='max-w-4xl mx-auto'>
+            <OptimizationPanel
+              taxInput={taxInput}
+              comparison={comparison}
+              onInputChange={handleInputChange}
+            />
+          </div>
+        ) : (
+          <div className='max-w-4xl mx-auto'>
+            <ScenarioManager
+              currentInput={taxInput}
+              currentComparison={comparison}
+              onLoadScenario={handleLoadScenario}
+            />
+          </div>
+        )}
       </div>
+
+      {/* Footer */}
+      <footer className='bg-gray-800 text-white py-8 mt-16'>
+        <div className='container mx-auto px-4 text-center'>
+          <p className='text-gray-300'>
+            Nigerian Tax Calculator - Compare Old vs New Tax Laws
+          </p>
+          <p className='text-sm text-gray-500 mt-2'>
+            This tool is for educational purposes. Consult a tax professional
+            for official advice.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

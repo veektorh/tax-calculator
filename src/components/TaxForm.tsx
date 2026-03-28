@@ -3,7 +3,7 @@ import { TaxFormProps, TaxFormData } from '../types';
 import { validateNumericInput, formatNumberInput } from '../utils/formatting';
 import { createTaxInput } from '../calculations/calculateTax';
 
-const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
+const TaxForm: React.FC<TaxFormProps> = ({ input, onChange }) => {
   const [formData, setFormData] = useState<TaxFormData>({
     grossAnnualIncome: formatNumberInput(input.grossAnnualIncome),
     nhfContribution: formatNumberInput(input.nhfContribution),
@@ -54,15 +54,7 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Check for any errors
-    const hasErrors = Object.values(errors).some((error) => error);
-    if (!hasErrors) {
-      onCalculate();
-    }
-  };
+  // No longer need handleSubmit since we auto-calculate
 
   return (
     <div className='bg-white rounded-lg shadow-lg p-6'>
@@ -70,7 +62,7 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
         Basic Information
       </h2>
 
-      <form onSubmit={handleSubmit} className='space-y-6'>
+      <div className='space-y-6'>
         {/* Gross Annual Income */}
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
@@ -224,15 +216,7 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
             </p>
           )}
         </div>
-
-        {/* Calculate Button */}
-        <button
-          type='submit'
-          className='w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors'
-        >
-          Calculate PAYE Tax Comparison
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

@@ -4,7 +4,6 @@ import { TaxInput, TaxComparison } from '../calculations/calculateTax';
 export interface TaxFormProps {
   input: TaxInput;
   onChange: (input: TaxInput) => void;
-  onCalculate: () => void;
 }
 
 export interface TaxFormData {

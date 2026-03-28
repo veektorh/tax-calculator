@@ -11,7 +11,39 @@ export const formatNaira = (
 ): string => {
   const { showSymbol = true, decimalPlaces = 0, compact = false } = options;
 
-  const value = amount instanceof Decimal ? amount : new Decimal(amount);
+  let value: Decimal;
+
+  try {
+    if (amount instanceof Decimal) {
+      value = amount;
+    } else if (amount === null || amount === undefined || amount === '') {
+      value = new Decimal(0);
+    } else if (
+      typeof amount === 'number' &&
+      (isNaN(amount) || !isFinite(amount))
+    ) {
+      value = new Decimal(0);
+    } else {
+      // Clean the string value
+      const cleanAmount =
+        typeof amount === 'string'
+          ? amount.replace(/[₦,\s]/g, '').trim()
+          : String(amount);
+
+      if (
+        cleanAmount === '' ||
+        cleanAmount === 'undefined' ||
+        cleanAmount === 'null'
+      ) {
+        value = new Decimal(0);
+      } else {
+        value = new Decimal(cleanAmount);
+      }
+    }
+  } catch (error) {
+    console.warn('formatNaira: Invalid amount:', amount, 'Using 0 as fallback');
+    value = new Decimal(0);
+  }
 
   // Format with Nigerian locale
   const formatter = new Intl.NumberFormat('en-NG', {
