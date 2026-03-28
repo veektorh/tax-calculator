@@ -10,7 +10,7 @@ import ScenarioManager from './components/ScenarioManager';
 const App: React.FC = () => {
   const [taxInput, setTaxInput] = useState<TaxInput>(() =>
     createTaxInput({
-      grossAnnualIncome: 60000000, // Start with the example from fiscalreforms.ng
+      grossAnnualIncome: 6000000, // Start with a more reasonable example
       annualRent: 2500000,
       nhfContribution: 0,
       nhisContribution: 0,
@@ -28,6 +28,8 @@ const App: React.FC = () => {
 
   const handleInputChange = useCallback((newInput: TaxInput) => {
     setTaxInput(newInput);
+    // Clear old comparison when input changes so user doesn't see stale results
+    setComparison(null);
   }, []);
 
   const handleCalculate = useCallback(async () => {
