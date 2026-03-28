@@ -33,6 +33,11 @@ const App: React.FC = () => {
   }, []);
 
   const handleCalculate = useCallback(async () => {
+    if (!taxInput) {
+      console.error('No tax input available');
+      return;
+    }
+
     setIsCalculating(true);
 
     // Add a small delay to show loading state
@@ -61,7 +66,11 @@ const App: React.FC = () => {
 
   // Calculate on mount with example data
   useEffect(() => {
-    handleCalculate();
+    try {
+      handleCalculate();
+    } catch (error) {
+      console.error('Initial calculation failed:', error);
+    }
   }, []); // Only run on mount
 
   return (
