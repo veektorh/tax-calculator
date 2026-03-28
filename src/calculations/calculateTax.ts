@@ -184,23 +184,34 @@ export function calculateOldLawTax(input: TaxInput): TaxCalculationResult {
     lifeInsurancePremium,
   } = input;
 
-  // Old law reliefs
-  const personalRelief = OLD_TAX_RELIEFS.personalRelief.amount;
-  const consolidatedReliefAllowance =
-    OLD_TAX_RELIEFS.consolidatedReliefAllowance.amount;
-
-  // Calculate total deductions
-  const totalDeductions = personalRelief
-    .plus(consolidatedReliefAllowance)
-    .plus(nhfContribution)
+  // Statutory deductions reduce assessable income first
+  const statutoryDeductions = nhfContribution
     .plus(nhisContribution)
     .plus(pensionContribution)
     .plus(interestOnLoan)
     .plus(lifeInsurancePremium);
 
-  // Calculate taxable income
+  // Assessable income = gross minus statutory deductions
+  const assessableIncome = Decimal.max(
+    grossAnnualIncome.minus(statutoryDeductions),
+    new Decimal(0),
+  );
+
+  // Personal relief and CRA are computed on assessable income (not gross)
+  const personalRelief = assessableIncome.times(OLD_TAX_RELIEFS.personalRelief.rate);
+  const consolidatedReliefAllowance = Decimal.max(
+    OLD_TAX_RELIEFS.consolidatedReliefAllowance.minAmount,
+    assessableIncome.times(OLD_TAX_RELIEFS.consolidatedReliefAllowance.rate),
+  );
+
+  // Total deductions for display purposes
+  const totalDeductions = statutoryDeductions
+    .plus(personalRelief)
+    .plus(consolidatedReliefAllowance);
+
+  // Taxable income = assessable income minus personal relief and CRA
   const taxableIncome = Decimal.max(
-    grossAnnualIncome.minus(totalDeductions),
+    assessableIncome.minus(personalRelief).minus(consolidatedReliefAllowance),
     new Decimal(0),
   );
 

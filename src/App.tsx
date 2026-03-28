@@ -89,18 +89,12 @@ const App: React.FC = () => {
           <div className='grid lg:grid-cols-2 gap-8'>
             {/* Left Column - Tax Form */}
             <div className='space-y-6'>
-              <TaxForm
-                input={taxInput}
-                onChange={handleInputChange}
-              />
+              <TaxForm input={taxInput} onChange={handleInputChange} />
             </div>
 
             {/* Right Column - Results */}
             <div className='space-y-6'>
-              <ComparisonView
-                comparison={comparison}
-                isLoading={false}
-              />
+              <ComparisonView comparison={comparison} isLoading={false} />
             </div>
           </div>
         ) : activeTab === 'optimization' ? (

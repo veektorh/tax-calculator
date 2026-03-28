@@ -37,14 +37,15 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange }) => {
     // Convert to TaxInput and propagate changes
     if (validation.isValid && validation.parsed) {
       try {
+        const strip = (v: string) => (v || '0').replace(/,/g, '');
         const newInput = createTaxInput({
-          grossAnnualIncome: updatedFormData.grossAnnualIncome || '0',
-          nhfContribution: updatedFormData.nhfContribution || '0',
-          nhisContribution: updatedFormData.nhisContribution || '0',
-          pensionContribution: updatedFormData.pensionContribution || '0',
-          interestOnLoan: updatedFormData.interestOnLoan || '0',
-          lifeInsurancePremium: updatedFormData.lifeInsurancePremium || '0',
-          annualRent: updatedFormData.annualRent || '0',
+          grossAnnualIncome: strip(updatedFormData.grossAnnualIncome),
+          nhfContribution: strip(updatedFormData.nhfContribution),
+          nhisContribution: strip(updatedFormData.nhisContribution),
+          pensionContribution: strip(updatedFormData.pensionContribution),
+          interestOnLoan: strip(updatedFormData.interestOnLoan),
+          lifeInsurancePremium: strip(updatedFormData.lifeInsurancePremium),
+          annualRent: strip(updatedFormData.annualRent),
         });
 
         onChange(newInput);

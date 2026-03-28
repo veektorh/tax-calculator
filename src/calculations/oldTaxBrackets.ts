@@ -10,11 +10,12 @@ export interface OldTaxBracket {
 
 export interface OldTaxReliefs {
   personalRelief: {
-    amount: Decimal;
+    rate: Decimal; // percentage of gross income
     description: string;
   };
   consolidatedReliefAllowance: {
-    amount: Decimal;
+    minAmount: Decimal;
+    rate: Decimal; // percentage of gross income; CRA = max(minAmount, rate * gross)
     description: string;
   };
 }
@@ -62,11 +63,12 @@ export const OLD_TAX_BRACKETS: OldTaxBracket[] = [
 // Old Tax Law Reliefs
 export const OLD_TAX_RELIEFS: OldTaxReliefs = {
   personalRelief: {
-    amount: new Decimal(12000000), // ₦12M personal relief
+    rate: new Decimal(0.20), // 20% of gross income
     description: 'Personal relief allowance',
   },
   consolidatedReliefAllowance: {
-    amount: new Decimal(600000), // ₦600k consolidated relief allowance
+    minAmount: new Decimal(200000), // ₦200k minimum
+    rate: new Decimal(0.01),        // 1% of gross income
     description: 'Consolidated relief allowance',
   },
 };
