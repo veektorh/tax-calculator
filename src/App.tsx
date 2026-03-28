@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { createTaxInput, compareTaxLaws } from './calculations/calculateTax';
 import { TaxInput, TaxComparison } from './types';
 import TaxForm from './components/TaxForm';
@@ -60,7 +60,7 @@ const App: React.FC = () => {
   }, []);
 
   // Calculate on mount with example data
-  React.useEffect(() => {
+  useEffect(() => {
     handleCalculate();
   }, []); // Only run on mount
 
