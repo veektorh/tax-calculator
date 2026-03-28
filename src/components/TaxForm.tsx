@@ -24,10 +24,9 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
         ? formatNumberInput(validation.parsed)
         : value;
 
-    setFormData((prev) => ({
-      ...prev,
-      [field]: formattedValue,
-    }));
+    // Update local form state
+    const updatedFormData = { ...formData, [field]: formattedValue };
+    setFormData(updatedFormData);
 
     // Update errors
     setErrors((prev) => ({
@@ -37,8 +36,6 @@ const TaxForm: React.FC<TaxFormProps> = ({ input, onChange, onCalculate }) => {
 
     // Convert to TaxInput and propagate changes
     if (validation.isValid && validation.parsed) {
-      const updatedFormData = { ...formData, [field]: formattedValue };
-
       try {
         const newInput = createTaxInput({
           grossAnnualIncome: updatedFormData.grossAnnualIncome || '0',

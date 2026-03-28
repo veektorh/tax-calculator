@@ -5,30 +5,35 @@ A comprehensive tax calculation and optimization tool for comparing Nigerian PAY
 ## 🚀 Features
 
 ### 📊 **Tax Calculation Engine**
+
 - **Dual Law Support**: Compare old vs new Nigerian PAYE tax laws side-by-side
 - **Precise Calculations**: Uses Decimal.js for accurate financial computations
 - **Complete Deductions**: Supports rent relief, pension, NHF, NHIS, life insurance, and loan interest
 - **Real-time Results**: Instant tax calculations with detailed breakdowns
 
 ### 📈 **Interactive Visualizations**
+
 - **Pie Charts**: Visual breakdown of tax vs take-home pay
 - **Bar Charts**: Comparative analysis across different tax brackets
 - **Impact Summary**: Clear indicators of tax law differences
 - **Responsive Charts**: Built with Chart.js for professional presentation
 
 ### 💼 **Scenario Management**
+
 - **Save/Load**: Store multiple tax calculation scenarios
 - **Quick Scenarios**: Pre-built templates (salary increases, optimized deductions)
 - **Comparison Tool**: Compare multiple scenarios side-by-side
 - **Data Persistence**: Local storage with import/export capabilities
 
 ### 📤 **Export & Sharing**
+
 - **PDF Reports**: Professional tax analysis documents
 - **Excel Export**: Raw data for further analysis
 - **Text Summaries**: Shareable formatted summaries
 - **Professional Layout**: Nigerian Naira formatting and proper styling
 
 ### 🎯 **Tax Optimization**
+
 - **Smart Suggestions**: AI-powered recommendations for tax savings
 - **Priority System**: High/medium/low priority optimization opportunities
 - **Savings Calculator**: Potential tax savings estimation
@@ -47,7 +52,8 @@ A comprehensive tax calculation and optimization tool for comparing Nigerian PAY
 ## 🏃‍♂️ Quick Start
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm or yarn
 
 ### Installation
@@ -81,18 +87,21 @@ npm run preview
 ## 📖 Usage
 
 ### 1. **Tax Calculator Tab**
+
 - Enter your gross annual income
 - Add deductions (rent, pension, NHF, etc.)
 - Click "Calculate Tax" for instant results
 - View side-by-side comparison of old vs new tax laws
 
-### 2. **Optimization Tab** 
+### 2. **Optimization Tab**
+
 - View interactive charts and visualizations
 - Get personalized tax optimization suggestions
 - Export PDF reports or Excel data
 - Copy formatted summaries to share
 
 ### 3. **Scenarios Tab**
+
 - Save your current tax configuration
 - Try quick scenarios like salary increases
 - Compare multiple tax scenarios side-by-side
@@ -101,11 +110,13 @@ npm run preview
 ## 🧮 Tax Law Support
 
 ### Old Tax Law (Pre-2024)
+
 - Traditional PAYE brackets and rates
 - Standard deduction allowances
 - Historical tax computation methods
 
 ### New Tax Law (2024+)
+
 - Updated progressive tax brackets
 - Enhanced rent relief (up to ₦500,000)
 - Revised pension contribution limits
@@ -114,6 +125,7 @@ npm run preview
 ## 📊 Example Calculations
 
 **For ₦60M annual salary:**
+
 - **Old Law**: ₦11,168,000 tax (18.6% effective rate)
 - **New Law**: ₦12,805,000 tax (21.3% effective rate)
 - **Impact**: ₦1,637,000 additional tax annually
