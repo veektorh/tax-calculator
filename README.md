@@ -122,14 +122,6 @@ npm run preview
 - Revised pension contribution limits
 - New deduction categories
 
-## 📊 Example Calculations
-
-**For ₦60M annual salary:**
-
-- **Old Law**: ₦11,168,000 tax (18.6% effective rate)
-- **New Law**: ₦12,805,000 tax (21.3% effective rate)
-- **Impact**: ₦1,637,000 additional tax annually
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -145,13 +137,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## ⚠️ Disclaimer
 
 This tool is for educational and informational purposes only. For official tax advice and compliance, please consult a qualified tax professional or the Federal Inland Revenue Service (FIRS).
-
-## 🙏 Acknowledgments
-
-- Tax law information sourced from [fiscalreforms.ng](https://fiscalreforms.ng)
-- Nigerian Federal Inland Revenue Service (FIRS)
-- Open source community for amazing tools and libraries
-
----
-
-**Built with ❤️ for the Nigerian community**
